@@ -1,0 +1,47 @@
+version: "3"
+services:
+#  eureka-registry:
+#    image: eureka
+#    container_name: eureka-registry
+#    ports:
+#      - "8762:8761"
+#
+#  registration:
+#    image: cloud
+#    container_name: registration
+#    ports:
+#      - "8981:8989"
+#    environment:
+#      SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://registry:8761/eureka"}}}}'
+#    depends_on:
+#      - eureka-registry
+
+  mysqlemployee:
+    image: mysql:8.0.26
+    networks:
+      - employee-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employee
+#    restart:  on-failure
+    ports:
+      - "3306:3306"
+
+  employee-service:
+    image: employee
+    ports:
+      - "9002:9000"
+    build:
+      context: ./
+      dockerfile: DockerFile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employee
+    restart: unless-stopped
+    networks:
+      - employee-mysql
+    links:
+      - mysqlemployee
+
+networks:
+  employee-mysql:
