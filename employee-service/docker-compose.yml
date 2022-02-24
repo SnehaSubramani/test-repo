@@ -37,10 +37,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: employee
-    restart: unless-stopped
+    restart: on-failure
     networks:
       - employee-mysql
-    links:
+    depends_on:
       - mysqlemployee
 
 networks:
