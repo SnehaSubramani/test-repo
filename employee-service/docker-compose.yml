@@ -45,3 +45,4 @@ services:
 
 networks:
   employee-mysql:
+    driver: bridge
