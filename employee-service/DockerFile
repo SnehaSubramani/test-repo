@@ -1,3 +1,3 @@
 FROM openjdk:8
 COPY target/employee-service.jar employee-service.jar
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./random","-Dspring.profiles.active=container","-jar", "employee-service.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./random","-Dspring.profiles.active=dockerembbed,oauth-security","-jar", "employee-service.jar"]
